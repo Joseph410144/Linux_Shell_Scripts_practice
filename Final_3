@@ -1,0 +1,13 @@
+#!/bin/bash
+
+now=$(date +'%Y%m%d')
+
+temp3=$(vmstat 1 1  | sed -n "3p" | awk {'print $4'})
+temp4=$(vmstat 1 1  | sed -n "3p" | awk {'print $15'})
+
+temp=$(uptime | awk {'print $1, $5'})
+temp2=$(uptime | awk {'print $10'})
+
+echo $now $temp "," $temp2 $temp3 "," $temp4 >> Final3.txt
+cat Final3.txt
+

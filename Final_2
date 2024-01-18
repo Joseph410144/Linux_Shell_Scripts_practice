@@ -1,0 +1,33 @@
+#!/bin/bash
+
+i=1
+temp=$(du -s /home/* | sed -n "${i}p" )
+total=0
+while [[ -n $temp ]]
+do
+
+ num=$(du -s /home/* | sed -n "${i}p" | awk {'print $1'})
+ total=$(expr $total + $num)
+ i=$(expr $i + 1)
+ temp=$(du -s /home/* | sed -n "${i}p")
+done
+
+i=1
+temp=$(du -s /home/* | sed -n "${i}p" )
+echo "Total Disk Usage by User"
+echo "User Space Percent" 
+while [[ -n $temp ]]
+do
+ num=$(du -s /home/* | sed -n "${i}p" | awk {'print $1'})
+ name=$(du -s /home/* | sed -n "${i}p" | awk {'print $2'})
+ namec=$(echo $name | cut -d '/' -f 3)
+ per=$(echo "scale=6;$num/$total"|bc)
+ pers=$(echo "scale=2;$per*100"|bc)
+ echo $namec $num $pers
+ i=$(expr $i + 1)
+ temp=$(du -s /home/* | sed -n "${i}p")
+done
+
+echo "--------------"
+echo "total" $total
+

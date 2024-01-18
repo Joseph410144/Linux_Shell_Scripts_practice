@@ -1,0 +1,24 @@
+#!/bin/bash
+
+cpuinf=$(uptime)
+meminf=$(vmstat)
+now=$(date +'%Y%m%d')
+
+echo "" > dataCpu.txt
+echo "" > dataMem.txt
+echo "" > Other.txt
+
+echo $cpuinf >> dataCpu.txt
+echo $meminf >> dataMem.txt
+
+memOth=$(sed -n "2p" dataMem.txt)
+echo $memOth >> Other.txt
+
+temp=$(awk '{print $1, $4}' dataCpu.txt)
+temp2=$(awk '{print $9}' dataCpu.txt)
+temp3=$(awk '{print $27}' Other.txt)
+temp4=$(awk '{print $38}' Other.txt)
+
+echo $now $temp "," $temp2 $temp3 "," $temp4 >> Final4.txt
+cat Final4.txt
+

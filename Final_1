@@ -1,0 +1,23 @@
+#!/bin/bash
+
+space1name=$(df | sed -n '/\/$/p' | awk {'print $6'})
+s1p=$(df | sed -n '/\/$/p' | awk {'print $5'})
+s1=$(echo $s1p | cut -d '%' -f 1)
+
+space2name=$(df | sed -n '/\/boot$/p' | awk {'print $6'})
+s2p=$(df | sed -n '/\/boot$/p' | awk {'print $5'})
+s2=$(echo $s2p | cut -d '%' -f 1)
+
+
+echo "Folder percent"
+echo $space1name $s1
+if [ $s1 -ge 80 ] 
+then
+ echo "warnning!!!  $space1name space is greater then 80%"
+fi
+
+echo $space2name $s2
+if [ $s2 -ge 80 ] 
+then
+ echo "warnning!!!  $space2name space is greater then 80%"
+fi
